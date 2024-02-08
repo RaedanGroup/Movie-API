@@ -16,11 +16,13 @@ let users = [
   {
     id: 1,
     name: 'Argos Stone',
+    email: 'argos.stone@email.com',
     favoriteMovies: []
   },
   {
     id: 2,
     name: 'Phaelan Mace',
+    email: 'phaelan.mace@email.com',
     favoriteMovies: ["The Third Man"]
   },
 ]
@@ -38,8 +40,10 @@ let movies = [
     "Director": {
       "Name": "Carol Reed",
       "Bio": "Sir Carol Reed was an English film director, producer and screenwriter. He was knighted in 1952 for his contribution to the film industry.",
-      "Birth": 1906
+      "Birth": 1906,
+      "Death": 1976
     },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/5/50/ThirdManUSPoster.jpg",
   },
   {
     "Title": 'Chinatown',
@@ -52,8 +56,10 @@ let movies = [
     "Director": {
       "Name": "Roman Polanski",
       "Bio": "Roman Polanski is a Polish-French film director, producer, writer, and actor.",
-      "Birth": 1933
+      "Birth": 1933,
+      "Death": "N/A"
     },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/3/38/Chinatown_%281974_poster%29.jpg",
   },
   {
     "Title": 'Blade Runner',
@@ -66,8 +72,10 @@ let movies = [
     "Director": {
       "Name": "Ridley Scott",
       "Bio": "Sir Ridley Scott is an English film director and producer.",
-      "Birth": 1937
+      "Birth": 1937,
+      "Death": "N/A"
     },
+    "ImagePath": "https://upload.wikimedia.org/wikipedia/en/5/53/Blade_Runner_poster.jpg",
   }
 ]
 
@@ -138,7 +146,7 @@ app.delete('/users/:id', (req, res) => {
 
   if (user) {
     users = users.filter(user => user.id != id);
-    res.status(200).send(`${user.name} deleted.`);
+    res.status(200).send(`${user.email} deleted.`);
   } else {
     res.status(400).send('User not found.');
   }

@@ -21,7 +21,84 @@
             </ul>
         </nav>
         <h1>Movie API Documentation</h1>
-        <p>The web application will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.</p>  
+        <p>The web application provide's users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.</p>
+
+        <h2>API Endpoints</h2>
+
+        <!-- table of endpoints with Request, URL, HTTP Method, Request Body Format, Response Body Format -->
+
+        <table>
+            <tr>
+                <th>Request</th>
+                <th>URL</th>
+                <th>HTTP Method</th>
+                <th>Request Body Format</th>
+                <th>Response Body Format</th>
+            </tr>
+            <tr>
+                <td>Return All Movies</td>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>JSON object containing entire movie list.</td>
+            </tr>
+            <tr>
+                <td>Return Movie Data by Title</td>
+                <td>/movies/[title]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>JSON object containing data of single movie. Includes: Title, Year, Description, Genre Name, Genre Description, Director Name, Director Bio, Director Year of Birth, Director Year of Death, and Poster IMG URL.</td>
+            </tr>
+            <tr>
+                <td>Return Genre Data by Title</td>
+                <td>/movies/genres/[genreName]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>JSON object containing data of single genre. Includes: Genre Name and Genre Description.</td>
+            </tr>
+            <tr>
+                <td>Return Director Data by Title</td>
+                <td>/movies/directors/[directorName]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>JSON object containing data of single director. Includes: Director Name, Director Bio, Director Year of Birth, and Director Year of Death.</td>
+            </tr>
+            <tr>
+                <td>Register New User</td>
+                <td>/users</td>
+                <td>POST</td>
+                <td>JSON object containing new user's submitted information. Structure: {name: string, email: string}</td>
+                <td>JSON object containing new user's account information, a unique id number, and an empty favoriteMovies array. Structure: {name: string, email: string, favoriteMovies: array, id: string}</td>
+            </tr>
+            <tr>
+                <td>Update Username</td>
+                <td>/users/[id]</td>
+                <td>PUT</td>
+                <td>JSON object containing the updated username. Structure: {name: string}</td>
+                <td>JSON object containing user's updated account information. Structure: {name: string, email: string, favoriteMovies: array, id: string}</td>
+            </tr>
+            <tr>
+                <td>Add Favorite Movie</td>
+                <td>/users/[id]/[movieTitle]</td>
+                <td>PUT</td>
+                <td>None</td>
+                <td>Text message. Structure: {movieTitle} added to {userName}'s favorites.</td>
+            </tr>
+            <tr>
+                <td>Remove Favorite Movie</td>
+                <td>/users/[id]/[movieTitle]</td>
+                <td>Delete</td>
+                <td>None</td>
+                <td>Text message. Structure: {movieTitle} removed from {userName}'s favorites.</td>
+            </tr>
+            <tr>
+                <td>Delete User</td>
+                <td>/users/[id]</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>Text message. Structure: {userEmail} deleted.</td>
+            </tr>
+        </table>       
     </body>
 </html>
 
