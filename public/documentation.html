@@ -43,6 +43,13 @@
                 <td>JSON object containing entire movie list.</td>
             </tr>
             <tr>
+                <td>Return All Users</td>
+                <td>/users</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>JSON object containing entire user list.</td>
+            </tr>
+            <tr>
                 <td>Return Movie Data by Title</td>
                 <td>/movies/[title]</td>
                 <td>GET</td>
@@ -50,14 +57,14 @@
                 <td>JSON object containing data of single movie. Includes: Title, Year, Description, Genre Name, Genre Description, Director Name, Director Bio, Director Year of Birth, Director Year of Death, and Poster IMG URL.</td>
             </tr>
             <tr>
-                <td>Return Genre Data by Title</td>
+                <td>Return Genre Data by Name</td>
                 <td>/movies/genres/[genreName]</td>
                 <td>GET</td>
                 <td>None</td>
                 <td>JSON object containing data of single genre. Includes: Genre Name and Genre Description.</td>
             </tr>
             <tr>
-                <td>Return Director Data by Title</td>
+                <td>Return Director Data by Name</td>
                 <td>/movies/directors/[directorName]</td>
                 <td>GET</td>
                 <td>None</td>
@@ -67,36 +74,36 @@
                 <td>Register New User</td>
                 <td>/users</td>
                 <td>POST</td>
-                <td>JSON object containing new user's submitted information. Structure: {name: string, email: string}</td>
-                <td>JSON object containing new user's account information, a unique id number, and an empty favoriteMovies array. Structure: {name: string, email: string, favoriteMovies: array, id: string}</td>
+                <td>JSON object containing new user's submitted information. Structure: {id: number, name: string, password: string, email: string, birthday: date}</td>
+                <td>JSON object containing new user's account information, a unique id number, and an empty favoriteMovies array. Structure: {id: number, username: string, password: string, email: string, birthday: date, favoriteMovies: array, _id: string, __v: number}</td>
             </tr>
             <tr>
                 <td>Update Username</td>
-                <td>/users/[id]</td>
+                <td>/users/[username]</td>
                 <td>PUT</td>
-                <td>JSON object containing the updated username. Structure: {name: string}</td>
-                <td>JSON object containing user's updated account information. Structure: {name: string, email: string, favoriteMovies: array, id: string}</td>
+                <td>JSON object containing the updated username. Structure: {username: string}</td>
+                <td>JSON object containing user's updated account information. Structure: {id: number, username: string, password: string, email: string, birthday: date, favoriteMovies: array, _id: string, __v: number}</td>
             </tr>
             <tr>
                 <td>Add Favorite Movie</td>
-                <td>/users/[id]/[movieTitle]</td>
+                <td>/users/[username]/favorite/[movieTitle]</td>
                 <td>PUT</td>
                 <td>None</td>
-                <td>Text message. Structure: {movieTitle} added to {userName}'s favorites.</td>
+                <td>Text message. Structure: {movieTitle} has been added to {userName}'s favorites.</td>
             </tr>
             <tr>
                 <td>Remove Favorite Movie</td>
-                <td>/users/[id]/[movieTitle]</td>
+                <td>/users/[username]/favorite/[movieTitle]</td>
                 <td>Delete</td>
                 <td>None</td>
-                <td>Text message. Structure: {movieTitle} removed from {userName}'s favorites.</td>
+                <td>Text message. Structure: {movieTitle} has been removed from {userName}'s favorites.</td>
             </tr>
             <tr>
                 <td>Delete User</td>
-                <td>/users/[id]</td>
+                <td>/users/[username]</td>
                 <td>DELETE</td>
                 <td>None</td>
-                <td>Text message. Structure: {userEmail} deleted.</td>
+                <td>Text message. Structure: Account for {userEmail} has been deleted.</td>
             </tr>
         </table>       
     </body>
