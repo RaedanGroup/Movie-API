@@ -74,15 +74,22 @@
                 <td>Register New User</td>
                 <td>/users</td>
                 <td>POST</td>
-                <td>JSON object containing new user's submitted information. Structure: {id: number, name: string, password: string, email: string, birthday: date}</td>
-                <td>JSON object containing new user's account information, a unique id number, and an empty favoriteMovies array. Structure: {id: number, username: string, password: string, email: string, birthday: date, favoriteMovies: array, _id: string, __v: number}</td>
+                <td>JSON object containing new user's submitted information. Structure: { name: string, password: string, email: string, birthday: date}</td>
+                <td>JSON object containing new user's account information, a unique id number, and an empty favoriteMovies array. Structure: { username: string, password: string, email: string, birthday: date, favoriteMovies: array, _id: string, __v: number}</td>
+            </tr>
+            <tr>
+                <td>User Login</td>
+                <td>/login?username={username}&password={password}</td>
+                <td>POST</td>
+                <td>None</td>
+                <td>JSON object containing user's account information and jwtoken. Structure: { username: string, password: string, email: string, birthday: date, favoriteMovies: array, _id: string, __v: number},"token": string</td>
             </tr>
             <tr>
                 <td>Update Username</td>
                 <td>/users/[username]</td>
                 <td>PUT</td>
                 <td>JSON object containing the updated username. Structure: {username: string}</td>
-                <td>JSON object containing user's updated account information. Structure: {id: number, username: string, password: string, email: string, birthday: date, favoriteMovies: array, _id: string, __v: number}</td>
+                <td>JSON object containing user's updated account information. Structure: { username: string, password: string, email: string, birthday: date, favoriteMovies: array, _id: string, __v: number}</td>
             </tr>
             <tr>
                 <td>Add Favorite Movie</td>

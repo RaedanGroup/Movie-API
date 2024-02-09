@@ -18,28 +18,68 @@ mongoose.connect('mongodb://localhost:27017/movieAPI')
   .catch(err => console.error('Error connecting to MongoDB', err));
 
 // use body-parser
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// use auth.js
+let auth = require('./auth')(app);
+
+// use passport
+const passport = require('passport');
+require('./passport');
 
 // log all requests
 app.use(morgan('common'));
 
 // CREATE endpoints
 // POST new user
-app.post('/users', (req, res) => {
-  const newUser = new User(req.body);
+app.post('/users', async (req, res) => {
+  try {
+    const { username } = req.body;
 
-  newUser.save()
-    .then(user => res.status(201).json(user))
-    .catch(err => res.status(400).send(err.message));
+    // Check if the username already exists
+    const existingUser = await User.findOne({ username });
+
+    if (existingUser) {
+      // If the username already exists, send a 409 Conflict response
+      return res.status(409).send('Username already in use.');
+    }
+
+    // If the username is not already in use, create and save the new user
+    const newUser = new User(req.body);
+    const savedUser = await newUser.save();
+
+    // Send a 201 Created response with the created user object
+    res.status(201).json(savedUser);
+  } catch (error) {
+    // Handle any unexpected errors
+    res.status(500).send('Internal Server Error');
+  }
 });
+
+// app.post('/users', (req, res) => {
+//   const newUser = new User(req.body);
+
+//   newUser.save()
+//     .then(user => res.status(201).json(user))
+//     .catch(err => res.status(400).send(err.message));
+// });
+
+
+
 
 // UPDATE endpoints
 // PUT user info update
-app.put('/users/:username', (req, res) => {
+app.put('/users/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+
+  if(req.user.Username !== req.params.Username){
+    return res.status(400).send('Permission denied');
+  }
+
   const { username } = req.params;
   const updatedUser = req.body;
 
-  User.findOne({ username })
+  await User.findOne({ username })
     .then(user => {
       if (!user) {
         return res.status(404).send('User not found.');
@@ -57,10 +97,15 @@ app.put('/users/:username', (req, res) => {
 
 
 // PUT add movie to user's favorites
-app.put('/users/:username/favorite/:title', (req, res) => {
+app.put('/users/:username/favorite/:title', passport.authenticate('jwt', { session: false }), async (req, res) => {
+
+  if(req.user.Username !== req.params.Username){
+    return res.status(400).send('Permission denied');
+}
+
   const { username, title } = req.params;
 
-  User.findOne({ username })
+  await User.findOne({ username })
     .then(user => {
       if (!user) {
         return res.status(404).send('User not found.');
@@ -84,10 +129,15 @@ app.put('/users/:username/favorite/:title', (req, res) => {
 
 // DELETE endpoints
 // DELETE movie from user's favorites
-app.delete('/users/:username/favorite/:title', (req, res) => {
+app.delete('/users/:username/favorite/:title', passport.authenticate('jwt', { session: false }), async (req, res) => {
+
+  if(req.user.Username !== req.params.Username){
+    return res.status(400).send('Permission denied');
+}
+
   const { username, title } = req.params;
 
-  User.findOne({ username })
+  await User.findOne({ username })
     .then(user => {
       if (!user) {
         return res.status(404).send('User not found.');
@@ -127,10 +177,15 @@ app.delete('/users/:username/favorite/:title', (req, res) => {
 
 
 // DELETE user
-app.delete('/users/:username', (req, res) => {
+app.delete('/users/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+
+  if(req.user.Username !== req.params.Username){
+    return res.status(400).send('Permission denied');
+}
+
   const { username } = req.params;
 
-  User.findOneAndDelete({ username })
+  await User.findOneAndDelete({ username })
     .then(user => {
       if (!user) {
         return res.status(404).send('User not found.');
@@ -143,24 +198,24 @@ app.delete('/users/:username', (req, res) => {
 
 // READ endpoints
 // GET all movies
-app.get('/movies', (req, res) => {
-  Movie.find()
+app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await Movie.find()
     .then(movies => res.status(200).json(movies))
     .catch(err => res.status(400).send(err.message));
 });
 
 // GET all users
-app.get('/users', (req, res) => {
-  User.find()
+app.get('/users', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  await User.find()
     .then(users => res.status(200).json(users))
     .catch(err => res.status(400).send(err.message));
 });
 
 // GET data about a single movie by title
-app.get('/movies/:title', (req, res) => {
+app.get('/movies/:title', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const { title } = req.params;
 
-  Movie.findOne({ Title: title })
+  await Movie.findOne({ Title: title })
     .then(movie => {
       if (!movie) {
         return res.status(404).send('Movie not found.');
@@ -171,10 +226,10 @@ app.get('/movies/:title', (req, res) => {
 });
 
 // GET genre data by name
-app.get('/movies/genres/:genreName', (req, res) => {
+app.get('/movies/genres/:genreName', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const { genreName } = req.params;
 
-  Movie.findOne({ 'Genre.Name': genreName })
+  await Movie.findOne({ 'Genre.Name': genreName })
     .select('Genre') // Only select the 'Genre' field
     .then(genre => {
       if (!genre) {
@@ -187,10 +242,10 @@ app.get('/movies/genres/:genreName', (req, res) => {
 
 
 // GET director data by name
-app.get('/movies/directors/:directorName', (req, res) => {
+app.get('/movies/directors/:directorName', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const { directorName } = req.params;
 
-  Movie.findOne({ 'Director.Name': directorName })
+  await Movie.findOne({ 'Director.Name': directorName })
     .select('Director') // Only select the 'Director' field
     .then(director => {
       if (!director) {
