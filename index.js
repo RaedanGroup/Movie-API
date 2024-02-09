@@ -18,7 +18,6 @@ mongoose.connect('mongodb://localhost:27017/movieAPI')
   .catch(err => console.error('Error connecting to MongoDB', err));
 
 // use body-parser
-// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // use auth.js
@@ -56,16 +55,6 @@ app.post('/users', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
-// app.post('/users', (req, res) => {
-//   const newUser = new User(req.body);
-
-//   newUser.save()
-//     .then(user => res.status(201).json(user))
-//     .catch(err => res.status(400).send(err.message));
-// });
-
-
 
 
 // UPDATE endpoints
