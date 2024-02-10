@@ -4,6 +4,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
+const path = require('path');
 
 // mongoose and models.js require
 const mongoose = require('mongoose');
@@ -262,6 +263,17 @@ app.delete('/users/:username', passport.authenticate('jwt', { session: false }),
 
 
 // READ endpoints
+
+// GET index.html
+// Define the path to the index.html file
+const indexPath = path.join(__dirname, 'index.html');
+
+// Define the endpoint for '/'
+app.get('/', (req, res) => {
+  // Send the index.html file
+  res.sendFile(indexPath);
+});
+
 // GET all movies
 app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movie.find()
