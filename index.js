@@ -19,7 +19,8 @@ const bcrypt = require('bcrypt');
 const { check, validationResult } = require('express-validator');
 
 // mongoose connection
-mongoose.connect('mongodb://localhost:27017/percysPicks')
+// mongoose.connect('mongodb://localhost:27017/percysPicks')
+mongoose.connect(process.env.CONNECTION_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Error connecting to MongoDB', err));
 
