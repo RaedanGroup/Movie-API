@@ -19,7 +19,7 @@ const bcrypt = require('bcrypt');
 const { check, validationResult } = require('express-validator');
 
 // mongoose connection
-mongoose.connect('mongodb://localhost:27017/movieAPI')
+mongoose.connect('mongodb://localhost:27017/percysPicks')
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Error connecting to MongoDB', err));
 
@@ -321,4 +321,8 @@ app.get('/movies/directors/:directorName', passport.authenticate('jwt', { sessio
 });
 
 
-app.listen(8080, () => console.log('App is listening on port 8080.'));
+// app.listen(8080, () => console.log('App is listening on port 8080.'));
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
+});
