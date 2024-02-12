@@ -252,7 +252,7 @@ app.get('/', (req, res) => {
 });
 
 // GET all movies
-app.get('/movies', passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get('/movies', async (req, res) => {
   await Movie.find()
     .then(movies => res.status(200).json(movies))
     .catch(err => res.status(400).send(err.message));
