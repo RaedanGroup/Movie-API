@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken'),
 
 require('./passport'); // Your local passport file
 
-
 let generateJWTToken = (user) => {
   return jwt.sign(user, jwtSecret, {
     subject: user.username, // This is the username you’re encoding in the JWT
@@ -13,7 +12,6 @@ let generateJWTToken = (user) => {
     algorithm: 'HS256' // This is the algorithm used to “sign” or encode the values of the JWT
   });
 }
-
 
 /* POST login. */
 module.exports = (router) => {

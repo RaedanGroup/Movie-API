@@ -31,18 +31,6 @@ app.use(bodyParser.json());
 // use cors
 const cors = require('cors');
 app.use(cors());
-// let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
-
-// app.use(cors({
-//   origin: (origin, callback) => {
-//     if(!origin) return callback(null, true);
-//     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
-//       let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
-//       return callback(new Error(message ), false);
-//     }
-//     return callback(null, true);
-//   }
-// }));
 
 // use auth.js
 let auth = require('./auth')(app);
@@ -103,8 +91,6 @@ app.post('/users', validateUser, async (req, res) => {
   }
 });
 
-
-
 // UPDATE endpoints
 // PUT user info update
 app.put('/users/:username', passport.authenticate('jwt', { session: false }), [
@@ -159,9 +145,6 @@ app.put('/users/:username', passport.authenticate('jwt', { session: false }), [
   }
 });
 
-
-
-
 // PUT add movie to user's favorites
 app.put('/users/:username/favorite/:title', passport.authenticate('jwt', { session: false }), async (req, res) => {
 
@@ -191,7 +174,6 @@ app.put('/users/:username/favorite/:title', passport.authenticate('jwt', { sessi
     })
     .catch(err => res.status(400).send(err.message));
 });
-
 
 // DELETE endpoints
 // DELETE movie from user's favorites
@@ -239,9 +221,6 @@ app.delete('/users/:username/favorite/:title', passport.authenticate('jwt', { se
     .catch(err => res.status(400).send(err.message));
 });
 
-
-
-
 // DELETE user
 app.delete('/users/:username', passport.authenticate('jwt', { session: false }), async (req, res) => {
 
@@ -261,9 +240,7 @@ app.delete('/users/:username', passport.authenticate('jwt', { session: false }),
     .catch(err => res.status(400).send(err.message));
 });
 
-
 // READ endpoints
-
 // GET index.html
 // Define the path to the index.html file
 const indexPath = path.join(__dirname, 'index.html');
@@ -317,7 +294,6 @@ app.get('/movies/genres/:genreName', passport.authenticate('jwt', { session: fal
     .catch(err => res.status(400).send(err.message));
 });
 
-
 // GET director data by name
 app.get('/movies/directors/:directorName', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const { directorName } = req.params;
@@ -333,8 +309,7 @@ app.get('/movies/directors/:directorName', passport.authenticate('jwt', { sessio
     .catch(err => res.status(400).send(err.message));
 });
 
-
-// app.listen(8080, () => console.log('App is listening on port 8080.'));
+// port listener
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
