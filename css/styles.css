@@ -7,6 +7,13 @@ table {
     margin-bottom: 20px;
 }
 
+@media screen and (max-width: 600px) {
+    table {
+        overflow-x: auto;
+        display: block;
+    }
+}
+
 th {
     background-color: #8a0303;
     color: rgb(255, 255, 255);
