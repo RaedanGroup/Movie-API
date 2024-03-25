@@ -30,7 +30,7 @@ app.use(bodyParser.json());
 
 // use cors
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'http://localhost:4200' , 'https://percyspicks.netlify.app'];
+let allowedOrigins = ['http://localhost:8080', 'http://localhost:1234', 'http://localhost:4200' , 'https://percyspicks.netlify.app' , 'https://raedangroup.github.io/percysPicks-Angular-client'];
 
 app.use(cors({
   origin: (origin, callback) => {
